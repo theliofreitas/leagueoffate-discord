@@ -2,6 +2,7 @@ import Discord from 'discord.js';
 import dotenv from 'dotenv';
 import { prefix } from './config.json';
 
+import lofStart from './commands/lof-start.js';
 import newChallenge from './commands/new-challenge.js';
 
 dotenv.config();
@@ -9,10 +10,12 @@ dotenv.config();
 const token = process.env.DISCORD_TOKEN;
 
 const client = new Discord.Client();
+const cooldowns = new Discord.Collection();
 client.commands = new Discord.Collection();
 
 // set a new item in the Collection
 // with the key as the command name and the value as the exported module
+client.commands.set('lof-start', lofStart);
 client.commands.set('new-challenge', newChallenge);
 
 // when the client is ready, run this code
@@ -35,6 +38,36 @@ client.on('message', message => {
   if (!client.commands.has(commandName)) return;
 
   const command = client.commands.get(commandName);
+
+  // Verifica se os argumentos do comando estão corretos
+  if (command.args && !args.length) {
+    return message.channel.send(`${command.errorMessage} \`${prefix}${command.name} ${command.usage}\``);
+  }
+
+
+
+  // Cooldowns ------------
+  if (!cooldowns.has(command.name)) {
+    cooldowns.set(command.name, new Discord.Collection());
+  }
+  
+  const now = Date.now();
+  const timestamps = cooldowns.get(command.name);
+  const cooldownAmount = (command.cooldown || 3) * 1000;
+  
+  if (timestamps.has(message.author.id)) {
+    const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+
+    if (now < expirationTime) {
+      const timeLeft = (expirationTime - now) / 1000;
+      return message.reply(`por favor espere ${timeLeft.toFixed(1)} segundo(s) para usar o comando \`${command.name}\` novamente.`);
+    }
+  } else {
+    timestamps.set(message.author.id, now);
+    setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+  }
+  // ----------------------
+
 
   try {
     command.execute(message, args);
