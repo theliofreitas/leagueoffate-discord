@@ -19,10 +19,10 @@ const RiotService = {
 
       const data = await response.json();
 
-      return data;
+      return { response: response, data: data };
     }
     catch (err) {
-      console.log('Erro no Try Catch');
+      throw new Error(err);
     }
   }
 }
