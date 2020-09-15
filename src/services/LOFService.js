@@ -17,7 +17,23 @@ const LOFService = {
       return { response: response, data: data };
     }
     catch (err) {
-      console.log(err);
+      throw new Error(err);
+    }
+  },  
+
+  async createChallenge(challenge){
+    try {
+      const response = await fetch(`${baseUrl}/challenges`, {
+          method: 'post',
+          body: JSON.stringify(challenge),
+          headers: { 'Content-Type': 'application/json' },
+      });
+
+      const data = await response.json();
+
+      return { response: response, data: data };
+    }
+    catch (err) {
       throw new Error(err);
     }
   }
