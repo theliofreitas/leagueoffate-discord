@@ -1,0 +1,24 @@
+[
+  {
+    "field": "participant.stats.kills",
+    "operator": "greater_than",
+    "value": {
+      "type": "ranged",
+      "min": 3,
+      "max": 18
+    },
+    "description": "Consiga pelo menos _VALUE_ abates",
+    "rate": 0.7
+  },
+  {
+    "field": "participant.stats.deaths",
+    "operator": "lower_than",
+    "value": {
+      "type": "ranged",
+      "min": 2,
+      "max": 6
+    },
+    "description": "Morra menos que _VALUE_ vezes",
+    "rate": 0.4
+  }
+]
