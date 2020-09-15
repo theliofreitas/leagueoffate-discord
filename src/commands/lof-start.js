@@ -1,5 +1,6 @@
 import Discord from 'discord.js';
 import RiotService from './../services/RiotService';
+import User from '../models/User';
 
 const lofStart = {
 	name: 'lof-start',
@@ -16,6 +17,9 @@ const lofStart = {
 			message.reply('a vinculação de contas só pode ser feita via Direct Message. Utilize este comando no chat privado');
 			return;
 		}
+
+		const userExists = await validateUserExist(summonerName, message);
+		if (userExists) return;
 
 		const summonerData = await validateSummonerName(summonerName, message);
 		if (!summonerData) return;
@@ -60,14 +64,36 @@ const lofStart = {
 		const iconIsValid = await validateSummonerIcon(summonerName, randomIconId, message);
 		if (!iconIsValid) return;
 
-		message.reply(':white_check_mark: Ícone confirmado e válido!');
+		message.reply(':white_check_mark: Ícone válido. Conta confirmada!');
 		
-		// Salvar no banco vinculando com User Id do Discord
-		// ...
-		
+		const userId = message.channel.recipient.id;
+		const userToCreate = {
+			userId: userId,
+			summonerId: summonerData.id,
+			summonerName: summonerName
+		}
+
+		try {
+			const user = await User.create(userToCreate);
+			message.reply(':white_check_mark: Usuário cadastrado');
+		}
+		catch (err) {
+			throw new Error(err);
+		}
 	},
 };
 
+async function validateUserExist(summonerName, message) {
+	const user = await User.findOne({ summonerName: summonerName });
+
+	if(!user) {
+		return false;
+	}
+	else {
+		message.reply(`:x: O usuário ${summonerName} já está vinculado à outra conta do Discord`);
+		return true;
+	}
+}
 
 async function validateSummonerName(summonerName, message) {
 	const { response, data } = await RiotService.getSummonerId(summonerName);
