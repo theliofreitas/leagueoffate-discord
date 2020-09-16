@@ -24,6 +24,22 @@ const RiotService = {
     catch (err) {
       throw new Error(err);
     }
+  },
+  async getLastMatch(accountId){
+    try {
+      const response = await fetch(`${baseUrl}/match/v4/matchlists/by-account/${accountId}`, {
+          method: 'get',
+          headers: headers,
+      });
+
+      const data = await response.json();
+      const lastMatch = data.matches[0];
+
+      return { response: response, data: lastMatch };
+    }
+    catch (err) {
+      throw new Error(err);
+    }
   }
 }
 

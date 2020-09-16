@@ -4,6 +4,7 @@ import { prefix } from './config.json';
 
 import lofStart from './commands/lof-start.js';
 import newChallenge from './commands/new-challenge.js';
+import checkChallenge from './commands/check-challenge.js';
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ client.commands = new Discord.Collection();
 // with the key as the command name and the value as the exported module
 client.commands.set('lof-start', lofStart);
 client.commands.set('new-challenge', newChallenge);
+client.commands.set('check-challenge', checkChallenge);
 
 // when the client is ready, run this code
 // this event will only trigger one time after logging in

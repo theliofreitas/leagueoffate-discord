@@ -51,7 +51,6 @@ const newChallenge = {
 		);
 
 		message.reply(embedChallenge);
-
 	},
 };
 
