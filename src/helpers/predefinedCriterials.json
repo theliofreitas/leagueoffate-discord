@@ -5,7 +5,7 @@
     "value": {
       "type": "ranged",
       "min": 3,
-      "max": 12
+      "max": 10
     },
     "description": "Consiga pelo menos _VALUE_ abates",
     "rate": 0.6
@@ -27,7 +27,7 @@
     "value": {
       "type": "ranged",
       "min": 3,
-      "max": 12
+      "max": 10
     },
     "description": "Tenha pelo menos _VALUE_ assistências",
     "rate": 0.6
@@ -78,7 +78,7 @@
     "value": {
       "type": "ranged",
       "min": 1,
-      "max": 4
+      "max": 3
     },
     "description": "Derrube _VALUE_ torres",
     "rate": 0.2

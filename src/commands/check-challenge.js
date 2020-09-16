@@ -30,10 +30,30 @@ const checkChallenge = {
     const validatedChallenge = await validateChallenge(challengeId, lastMatchId, message);
     if(!validatedChallenge) return;
 
-    console.log(validatedChallenge);
+    const embedColor = validateChallenge.status === 'completed' ? '#4ad48a' : '#e85454';
+    const embedCriterials = [];
 
-    
+		for (let i = 0; i < validatedChallenge.criterials.length; i++) {
+			const criterial = validatedChallenge.criterials[i];
+      const icon = criterial.result ? ':white_check_mark:' : ':x:';
 
+			embedCriterials.push({
+				name: `# Critério ${i}`,
+        value: `${icon} ${criterial.description}`,
+			})
+		}
+
+    const embedChallenge = new Discord.MessageEmbed()
+		.setColor(embedColor)
+		.setTitle(`:trophy:  ${validatedChallenge.summonerName}`)
+		.setDescription(`Resultado do desafio!`)
+		.setThumbnail(`https://cdn.discordapp.com/avatars/${userId}/${userAvatar}.png?size=128`)
+		.addFields(
+			{ name: '\u200B', value: '\u200B' },
+			embedCriterials
+		);
+
+		message.reply(embedChallenge);
   },
 };
 
