@@ -5,10 +5,10 @@
     "value": {
       "type": "ranged",
       "min": 3,
-      "max": 18
+      "max": 12
     },
     "description": "Consiga pelo menos _VALUE_ abates",
-    "rate": 0.7
+    "rate": 0.6
   },
   {
     "field": "participant.stats.deaths",
@@ -16,9 +16,115 @@
     "value": {
       "type": "ranged",
       "min": 2,
-      "max": 6
+      "max": 4
     },
     "description": "Morra menos que _VALUE_ vezes",
-    "rate": 0.4
+    "rate": 0.6
+  },
+  {
+    "field": "participant.stats.assists",
+    "operator": "greater_than",
+    "value": {
+      "type": "ranged",
+      "min": 3,
+      "max": 12
+    },
+    "description": "Tenha pelo menos _VALUE_ assistências",
+    "rate": 0.6
+  },
+  {
+    "field": "participant.stats.doubleKills",
+    "operator": "greater_than",
+    "value": {
+      "type": "fixed",
+      "fixed": 1
+    },
+    "description": "Faça _VALUE_ Double Kill",
+    "rate": 0.2
+  },
+  {
+    "field": "participant.stats.tripleKills",
+    "operator": "greater_than",
+    "value": {
+      "type": "fixed",
+      "fixed": 1
+    },
+    "description": "Faça _VALUE_ Triple Kill",
+    "rate": 0.15
+  },
+  {
+    "field": "participant.stats.quadraKills",
+    "operator": "greater_than",
+    "value": {
+      "type": "fixed",
+      "fixed": 1
+    },
+    "description": "Faça _VALUE_ Quadra Kill",
+    "rate": 0.1
+  },
+  {
+    "field": "participant.stats.pentaKills",
+    "operator": "greater_than",
+    "value": {
+      "type": "fixed",
+      "fixed": 1
+    },
+    "description": "Faça _VALUE_ Penta Kill",
+    "rate": 0.05
+  },
+  {
+    "field": "participant.stats.turretKills",
+    "operator": "greater_than",
+    "value": {
+      "type": "ranged",
+      "min": 1,
+      "max": 4
+    },
+    "description": "Derrube _VALUE_ torres",
+    "rate": 0.2
+  },
+  {
+    "field": "participant.stats.wardsPlaced",
+    "operator": "greater_than",
+    "value": {
+      "type": "ranged",
+      "min": 3,
+      "max": 7
+    },
+    "description": "Coloque _VALUE_ wards",
+    "rate": 0.2
+  },
+  {
+    "field": "participant.stats.wardsKilled",
+    "operator": "greater_than",
+    "value": {
+      "type": "ranged",
+      "min": 3,
+      "max": 7
+    },
+    "description": "Quebre _VALUE_ wards",
+    "rate": 0.2
+  },
+  {
+    "field": "participant.stats.visionScore",
+    "operator": "greater_than",
+    "value": {
+      "type": "ranged",
+      "min": 20,
+      "max": 70
+    },
+    "description": "Faça um placar de visão de _VALUE_ pontos",
+    "rate": 0.2
+  },
+  {
+    "field": "participant.stats.longestTimeSpentLiving",
+    "operator": "greater_than",
+    "value": {
+      "type": "ranged",
+      "min": 180,
+      "max": 600
+    },
+    "description": "Fique vivo por _VALUE_",
+    "rate": 0.3
   }
 ]
