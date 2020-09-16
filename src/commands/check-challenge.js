@@ -27,11 +27,12 @@ const checkChallenge = {
     const lastMatchId = await getLastMatchId(user.summonerName, message);
     if(!lastMatchId) return;
 
-    console.log(lastMatchId);
+    const validatedChallenge = await validateChallenge(challengeId, lastMatchId, message);
+    if(!validatedChallenge) return;
 
-    // validateChallenge(challengeId, lastMatchId, message);
+    console.log(validatedChallenge);
+
     
-
 
   },
 };
@@ -90,5 +91,33 @@ async function getLastMatchId(summonerName, message) {
   }
 }
 
+async function validateChallenge(challengeId, lastMatchId, message) {
+  const challenge = { matchId: lastMatchId }
+  const { response: validateResponse } = await LOFService.validateChallenge(challengeId, challenge);
+
+  if (validateResponse.status === 204) {
+    const { response: challengeResponse, data: challengeData } = await LOFService.getChallengeById(challengeId);
+
+    if( challengeResponse.status === 200) {
+      return challengeData;
+    }
+    else if (challengeResponse.status === 404) {
+      message.reply('o desafio enviado não existe');
+      return false;
+    }
+    else {
+      message.reply(`Ocorreu um erro ao consultar os serviços do League of Fate. Tente novamente mais tarde. \`Error: ${challengeResponse.status}\``);
+      return false;
+    }
+  }
+  else if (validateResponse.status === 404) {
+		message.reply('o desafio enviado não existe');
+		return false;
+	}
+	else {
+		message.reply(`Ocorreu um erro ao consultar os serviços do League of Fate. Tente novamente mais tarde. \`Error: ${validateResponse.status}\``);
+		return false;
+	}
+}
 
 export default checkChallenge;

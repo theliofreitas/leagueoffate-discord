@@ -36,7 +36,36 @@ const LOFService = {
     catch (err) {
       throw new Error(err);
     }
-  }
+  },
+
+  async validateChallenge(challengeId, challenge){
+    try {
+      const response = await fetch(`${baseUrl}/challenges/${challengeId}`, {
+          method: 'patch',
+          body: JSON.stringify(challenge),
+          headers: { 'Content-Type': 'application/json' },
+      });
+
+      return { response: response };
+    }
+    catch (err) {
+      throw new Error(err);
+    }
+  },
+
+  async getChallengeById(challengeId){
+    try {
+      const response = await fetch(`${baseUrl}/challenges/${challengeId}`, {
+          method: 'get',
+      });
+
+      const data = await response.json();
+      return { response: response, data: data };
+    }
+    catch (err) {
+      throw new Error(err);
+    }
+  }, 
 }
 
 export default LOFService;

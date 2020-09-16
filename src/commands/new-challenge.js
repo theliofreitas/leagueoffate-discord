@@ -23,7 +23,6 @@ const newChallenge = {
 		if(userHasOpenChallenges) return;
 
 		const generatedCriterials = generateChallengeCriterials();
-		console.log(generatedCriterials);
 
 		const challenge = await createChallenge(user.summonerName, generatedCriterials, message);
 		if(!challenge) return;
@@ -106,7 +105,6 @@ async function createChallenge(summonerName, generatedCriterials, message) {
 	}
 	else {
 		message.reply(`Ocorreu um erro ao consultar os serviços do League of Fate. Tente novamente mais tarde. \`Error: ${response.status}\``);
-		console.log(data);
 		return false;
 	}
 }
